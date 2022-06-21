@@ -1,281 +1,167 @@
 <template>
-  <div>
-    <div>
-      <wuc-tab
-        :tab-list="tabList"
-        :tabCur.sync="TabCur"
-        tab-class="text-center bg-white wuc-tab fixed"
-        select-class="text-blue"
-        @change="tabChange"
-      ></wuc-tab>
-      <div class="cu-bar bg-white solid-bottom" style="margin-top: 100upx">
-        <div class="action"><text class="cuIcon-titles text-orange"></text>基本使用(tab固定，只支持点击标签切换)</div>
-      </div>
-      <div class="bg-white padding margin text-center text-black">{{ tabList[TabCur].name }}</div>
-    </div>
+  <view>
+    <view>{{ page }}</view>
+    <page-meta root-font-size="system" />
+    <view class="page" data-weui-theme="{{theme}}" data-weui-mode="{{mode}}">
+      <view aria-hidden="{{dialog1 || dialog2 || dialog3 || dialog4 ? true : false}}" class="page__hd">
+        <view class="page__title">Half-screen Dialog</view>
+        <view class="page__desc">半屏组件</view>
+      </view>
+      <view aria-hidden="{{dialog1 || dialog2 || dialog3 || dialog4 ? true : false}}" class="page__bd page__bd_spacing">
+        <view aria-role="button" class="weui-btn weui-btn_default" bindtap="open1">样式一</view>
+        <view aria-role="button" class="weui-btn weui-btn_default" bindtap="open2">样式二</view>
+        <view aria-role="button" class="weui-btn weui-btn_default" bindtap="open3">样式三</view>
+        <view aria-role="button" class="weui-btn weui-btn_default" bindtap="open4">样式四</view>
+      </view>
 
-    <div>
-      <div class="cu-bar bg-white margin-top solid-bottom">
-        <div class="action"><text class="cuIcon-titles text-orange"></text>居中选中放大(外部触发切换)</div>
-      </div>
-      <wuc-tab
-        :tab-list="tabList2"
-        :tabCur="TabCur2"
-        @change="tabChange2"
-        tab-class="text-center text-black bg-white"
-        select-class="text-blue text-xl"
-      ></wuc-tab>
-      <swiper
-        :current="TabCur2"
-        class="swiper"
-        duration="300"
-        :circular="true"
-        indicator-color="rgba(255,255,255,0)"
-        indicator-active-color="rgba(255,255,255,0)"
-        @change="swiperChange2"
-      >
-        <swiper-item v-for="(item, index) in tabList2" :key="index">
-          <div class="bg-white padding margin text-center text-black">{{ item.name }}</div>
-        </swiper-item>
-      </swiper>
-    </div>
-
-    <div>
-      <div class="cu-bar bg-white margin-top solid-bottom">
-        <div class="action"><text class="cuIcon-titles text-orange"></text>平分</div>
-      </div>
-      <wuc-tab
-        :tab-list="tabList3"
-        textFlex
-        :tabCur.sync="TabCur3"
-        tab-class="text-center text-black bg-white"
-        select-class="text-orange"
-      ></wuc-tab>
-      <swiper
-        :current="TabCur3"
-        class="swiper"
-        duration="300"
-        :circular="true"
-        indicator-color="rgba(255,255,255,0)"
-        indicator-active-color="rgba(255,255,255,0)"
-        @change="swiperChange3"
-      >
-        <swiper-item v-for="(item, index) in tabList3" :key="index">
-          <div class="bg-white padding margin text-center text-black">{{ item.name }}</div>
-        </swiper-item>
-      </swiper>
-    </div>
-
-    <div>
-      <div class="cu-bar bg-white margin-top solid-bottom">
-        <div class="action"><text class="cuIcon-titles text-orange"></text>背景</div>
-      </div>
-      <wuc-tab
-        :tab-list="tabList4"
-        :tabCur.sync="TabCur4"
-        tab-class="text-center text-white bg-blue"
-        select-class="text-white"
-      ></wuc-tab>
-      <swiper
-        :current="TabCur4"
-        class="swiper row"
-        duration="300"
-        :circular="true"
-        indicator-color="rgba(255,255,255,0)"
-        indicator-active-color="rgba(255,255,255,0)"
-        @change="swiperChange4"
-      >
-        <swiper-item v-for="(item, index) in tabList4" :key="index">
-          <div class="bg-white padding margin text-center text-black">{{ item.name }}</div>
-        </swiper-item>
-      </swiper>
-    </div>
-
-    <div>
-      <div class="cu-bar bg-white margin-top solid-bottom">
-        <div class="action"><text class="cuIcon-titles text-orange"></text>图标</div>
-      </div>
-      <wuc-tab
-        :tab-list="tabList5"
-        :tabCur.sync="TabCur5"
-        tab-class="text-center text-black bg-white"
-        select-class="text-blue"
-      />
-      <swiper
-        :current="TabCur5"
-        class="swiper"
-        duration="300"
-        :circular="true"
-        indicator-color="rgba(255,255,255,0)"
-        indicator-active-color="rgba(255,255,255,0)"
-        @change="swiperChange5"
-      >
-        <swiper-item v-for="(item, index) in tabList5" :key="index">
-          <div class="bg-white padding margin text-center text-black">{{ item.name }}</div>
-        </swiper-item>
-      </swiper>
-    </div>
-  </div>
+      <view aria-role="dialog" aria-modal="true" aria-labelledby="js_dialog1_title">
+        <view class="weui-mask weui-transition {{dialog1 ? 'weui-transition_show' : ''}}" bindtap="close"></view>
+        <view class="weui-half-screen-dialog weui-transition {{dialog1 ? 'weui-transition_show' : ''}}">
+          <view class="weui-half-screen-dialog__hd">
+            <view class="weui-half-screen-dialog__hd__side" bindtap="close">
+              <view aria-role="button" class="weui-icon-btn">关闭<i class="weui-icon-close-thin"></i></view>
+            </view>
+            <view class="weui-half-screen-dialog__hd__main">
+              <strong class="weui-half-screen-dialog__title" id="js_dialog1_title">标题</strong>
+              <view class="weui-half-screen-dialog__subtitle">标题</view>
+            </view>
+          </view>
+          <view class="weui-half-screen-dialog__bd" style="padding-top: 32px; height: 50px"> 可放自定义内容 </view>
+        </view>
+      </view>
+      <view aria-role="dialog" aria-modal="true" aria-labelledby="js_dialog2_title">
+        <view
+          class="weui-mask weui-transition {{dialog2 ? 'weui-transition_show' : ''}}"
+          bindtap="close"
+          aria-role="button"
+          aria-label="关闭"
+        ></view>
+        <view
+          class="weui-half-screen-dialog weui-half-screen-dialog_bottom-fixed weui-transition {{dialog2 ? 'weui-transition_show' : ''}}"
+        >
+          <view class="weui-half-screen-dialog__hd">
+            <view class="weui-half-screen-dialog__hd__side" bindtap="close">
+              <view aria-role="button" style="display: none" class="weui-btn_icon weui-wa-hotarea"
+                >返回<i class="weui-icon-back-arrow-thin"></i
+              ></view>
+              <view aria-role="button" style="display: none" class="weui-btn_icon weui-wa-hotarea"
+                >关闭<i class="weui-icon-close-thin"></i
+              ></view>
+              <view aria-role="button" class="weui-btn_icon weui-wa-hotarea"
+                >关闭<i class="weui-icon-slide-down"></i
+              ></view>
+            </view>
+            <view class="weui-half-screen-dialog__hd__main">
+              <strong class="weui-half-screen-dialog__title" id="js_dialog2_title">标题</strong>
+            </view>
+            <view class="weui-half-screen-dialog__hd__side">
+              <view aria-role="button" class="weui-icon-btn">更多<i class="weui-icon-more"></i></view>
+            </view>
+          </view>
+          <view class="weui-half-screen-dialog__bd">
+            <view class="weui-bottom-fixed-opr-page  {{wrap ? 'weui-bottom-fixed-opr-page_btn-wrap' : ''}}">
+              <view class="weui-bottom-fixed-opr-page__content">
+                <view class="weui-half-screen-dialog__desc"> 辅助描述内容，可根据实际需要安排 </view>
+                <view class="weui-half-screen-dialog__tips" role="option">
+                  辅助提示内容，可根据实际需要安排 Dolor adipisci quidem consequuntur similique consequuntur doloribus
+                  modi possimus sunt voluptas qui Aspernatur natus error quisquam quidem ipsa corrupti! Dignissimos
+                  quasi quis natus fugiat odio in? Mollitia molestias error earum. Dolor adipisci quidem consequuntur
+                  similique consequuntur doloribus modi possimus sunt voluptas qui Aspernatur natus error quisquam
+                  quidem ipsa corrupti! Dignissimos quasi quis natus fugiat odio in? Mollitia molestias error earum.
+                  Dolor adipisci quidem consequuntur similique consequuntur doloribus modi possimus sunt voluptas qui
+                  Aspernatur natus error quisquam quidem ipsa corrupti! Dignissimos quasi quis natus fugiat odio in?
+                  Mollitia molestias error earum. Dolor adipisci quidem consequuntur similique consequuntur doloribus
+                  modi possimus sunt voluptas qui Aspernatur natus error quisquam quidem ipsa corrupti! Dignissimos
+                  quasi quis natus fugiat odio in? Mollitia molestias error earum. Dolor adipisci quidem consequuntur
+                  similique consequuntur doloribus modi possimus sunt voluptas qui Aspernatur natus error quisquam
+                  quidem ipsa corrupti! Dignissimos quasi quis natus fugiat odio in? Mollitia molestias error earum.
+                </view>
+              </view>
+              <view class="weui-bottom-fixed-opr">
+                <view id="js_btn1_1" aria-role="button" class="weui-btn weui-btn_default" bindtap="close">取消</view>
+                <view id="js_btn1_2" aria-role="button" class="weui-btn weui-btn_primary" bindtap="close"
+                  >阅读并同意</view
+                >
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view aria-role="dialog" aria-modal="true">
+        <view
+          class="weui-mask weui-transition {{dialog3 ? 'weui-transition_show' : ''}}"
+          bindtap="close"
+          aria-role="button"
+          aria-label="关闭"
+        ></view>
+        <view
+          class="weui-half-screen-dialog weui-transition {{dialog3 ? 'weui-transition_show' : ''}} {{wrap1 ? 'weui-half-screen-dialog_btn-wrap' : ''}}"
+        >
+          <view class="weui-half-screen-dialog__hd">
+            <view class="weui-half-screen-dialog__hd__side" bindtap="close">
+              <view aria-role="button" class="weui-icon-btn">关闭<i class="weui-icon-close-thin"></i></view>
+            </view>
+            <view class="weui-half-screen-dialog__hd__main">
+              <strong class="weui-half-screen-dialog__title">标题</strong>
+            </view>
+          </view>
+          <view class="weui-half-screen-dialog__bd" style="padding-top: 32px; height: 50px"> 可放自定义内容 </view>
+          <view class="weui-half-screen-dialog__ft">
+            <view class="weui-half-screen-dialog__btn-area">
+              <view aria-role="button" class="weui-btn weui-btn_default" bindtap="close" id="js_btn2_1">取消</view>
+              <view aria-role="button" class="weui-btn weui-btn_primary" bindtap="close" id="js_btn2_2"
+                >阅读并同意</view
+              >
+            </view>
+            <view class="weui-half-screen-dialog__attachment-area">
+              <navigator class="weui-link" url="">附加操作</navigator>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view aria-role="dialog" aria-modal="true">
+        <view
+          class="weui-mask weui-transition {{dialog4 ? 'weui-transition_show' : ''}}"
+          bindtap="close"
+          aria-role="button"
+          aria-label="关闭"
+        ></view>
+        <view
+          class="weui-half-screen-dialog weui-half-screen-dialog_large weui-transition {{dialog4 ? 'weui-transition_show' : ''}}"
+        >
+          <view class="weui-half-screen-dialog__hd">
+            <view class="weui-half-screen-dialog__hd__side" bindtap="close">
+              <view aria-role="button" class="weui-icon-btn">关闭<i class="weui-icon-close-thin"></i></view>
+            </view>
+            <view class="weui-half-screen-dialog__hd__main">
+              <strong class="weui-half-screen-dialog__title">标题</strong>
+            </view>
+          </view>
+          <view class="weui-half-screen-dialog__bd" style="padding-top: 32px; height: 50px"> 可放自定义内容 </view>
+          <view class="weui-half-screen-dialog__ft">
+            <view class="weui-half-screen-dialog__btn-area">
+              <view aria-role="button" class="weui-btn weui-btn_primary" bindtap="close">主要操作</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 </template>
 
 <script>
-import WucTab from '@/components/wuc-tab/wuc-tab.vue';
-
 export default {
   data() {
     return {
-      tabList: [
-        { name: '选项卡一' },
-        { name: '选项卡二' },
-        { name: '选项卡三' },
-        { name: '选项卡四' },
-        { name: '选项卡五' },
-        { name: '选项卡六' },
-        { name: '选项卡七' },
-        { name: '选项卡八' },
-      ],
-      tabList2: [{ name: '精选' }, { name: '订阅' }],
-      tabList3: [{ name: '精选' }, { name: '订阅' }],
-      tabList4: [
-        { name: '推荐' },
-        { name: '热点' },
-        { name: '视频' },
-        { name: '问答' },
-        { name: '社会' },
-        { name: '娱乐' },
-        { name: '科技' },
-        { name: '汽车' },
-      ],
-      tabList5: [
-        { name: '短信', icon: 'cuIcon-comment' },
-        { name: '电话', icon: 'cuIcon-dianhua' },
-        { name: 'wifi', icon: 'cuIcon-wifi' },
-      ],
-      TabCur: 0,
-      TabCur2: 0,
-      TabCur3: 0,
-      TabCur4: 0,
-      TabCur5: 0,
+      page: 'index',
     };
   },
 
-  components: { WucTab },
-
   computed: {},
 
-  methods: {
-    tabChange(index) {
-      this.TabCur = index;
-    },
-    tabChange2(index) {
-      this.TabCur2 = index;
-    },
-    swiperChange2(e) {
-      let { current } = e.target;
-      this.TabCur2 = current;
-    },
-    swiperChange3(e) {
-      let { current } = e.target;
-      this.TabCur3 = current;
-    },
-    swiperChange4(e) {
-      let { current } = e.target;
-      this.TabCur4 = current;
-    },
-    swiperChange5(e) {
-      this.TabCur5 = e.target.current;
-    },
-  },
+  methods: {},
 
   onReady() {},
 };
 </script>
-<style>
-div,
-scroll-view,
-swiper {
-  box-sizing: border-box;
-}
-div {
-  font-size: 28upx;
-  background-color: #f1f1f1;
-}
-.swiper {
-  height: 140upx;
-}
-
-.cu-bar {
-  display: flex;
-  position: relative;
-  align-items: center;
-  min-height: 100upx;
-  justify-content: space-between;
-}
-
-.cu-bar .action {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  justify-content: center;
-  max-width: 100%;
-  background-color: #ffffff;
-}
-
-.cu-bar .action:first-child {
-  margin-left: 30upx;
-  font-size: 30upx;
-}
-
-.solid,
-.solid-bottom {
-  position: relative;
-}
-
-.solid::after,
-.solid-bottom::after {
-  content: ' ';
-  width: 200%;
-  height: 200%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: inherit;
-  transform: scale(0.5);
-  transform-origin: 0 0;
-  pointer-events: none;
-  box-sizing: border-box;
-}
-
-.solid::after {
-  border: 1upx solid rgba(0, 0, 0, 0.1);
-}
-
-.solid-bottom::after {
-  border-bottom: 1upx solid rgba(0, 0, 0, 0.1);
-}
-
-.text-orange {
-  color: #f37b1d;
-}
-.text-black {
-  color: #333333;
-}
-.bg-white {
-  background-color: #ffffff;
-}
-
-.padding {
-  padding: 30upx;
-}
-
-.margin {
-  margin: 30upx;
-}
-
-.margin-top {
-  margin-top: 30upx;
-}
-.text-center {
-  text-align: center;
-}
-</style>
+<style></style>

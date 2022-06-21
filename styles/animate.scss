@@ -1,0 +1,20 @@
+.ids-transition {
+  &.ids-mask {
+    transition: opacity 0.3s, visibility 0.3s;
+    opacity: 0;
+    visibility: hidden;
+  }
+  &.ids-dialog {
+    transition: transform 0.3s;
+    transform: translateY(100%);
+  }
+}
+.ids-transition-show {
+  &.ids-mask {
+    opacity: 1;
+    visibility: visible;
+  }
+  &.ids-dialog {
+    transform: translateY(0);
+  }
+}
