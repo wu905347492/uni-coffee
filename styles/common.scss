@@ -1,0 +1,78 @@
+// 全局字体
+page {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC',
+    'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+}
+// 清浮动
+.ids-clearfix:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+// 文字省略
+.ids-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ids-multi-ellipsis--l2,
+.ids-multi-ellipsis--l3 {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ids-multi-ellipsis--l2 {
+  -webkit-line-clamp: 2;
+}
+.ids-multi-ellipsis--l3 {
+  -webkit-line-clamp: 3;
+}
+// 1px边框
+// 为元素添加Retina屏幕下的1px边框(hairline)
+.ids-hairline,
+.ids-hairline--bottom,
+.ids-hairline--left,
+.ids-hairline--right,
+.ids-hairline--surround,
+.ids-hairline--top,
+.ids-hairline--top-bottom {
+  position: relative;
+}
+.ids-hairline--bottom:after,
+.ids-hairline--left:after,
+.ids-hairline--right:after,
+.ids-hairline--surround:after,
+.ids-hairline--top-bottom:after,
+.ids-hairline--top:after,
+.ids-hairline:after {
+  border: 0 solid #e0e0e0;
+  bottom: -50%;
+  box-sizing: border-box;
+  content: ' ';
+  left: -50%;
+  pointer-events: none;
+  position: absolute;
+  right: -50%;
+  top: -50%;
+  transform: scale(0.5);
+  transform-origin: center;
+}
+.ids-hairline--top:after {
+  border-top-width: 1px;
+}
+.ids-hairline--left:after {
+  border-left-width: 1px;
+}
+.ids-hairline--right:after {
+  border-right-width: 1px;
+}
+.ids-hairline--bottom:after {
+  border-bottom-width: 1px;
+}
+.ids-hairline--top-bottom:after {
+  border-width: 1px 0;
+}
+.ids-hairline--surround:after {
+  border-width: 1px;
+}
